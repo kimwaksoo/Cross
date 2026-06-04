@@ -1,0 +1,637 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f7f3ec;
+  color: #413a33;
+  font-family: "Malgun Gothic", system-ui, sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  position: relative;
+  width: min(1180px, calc(100% - 28px));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 30px 26px 56px 84px;
+  background: #fdfbf7;
+  box-shadow: 0 0 28px rgba(80, 66, 50, 0.08);
+}
+
+/* 왼쪽 다이어리 줄 */
+.app::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 62px;
+  width: 1px;
+  background: #efcccc;
+}
+
+/* 상단 소개 */
+.hero {
+  position: relative;
+  min-height: 150px;
+  padding: 24px 28px;
+  border: 1px dashed #cdbda9;
+  border-radius: 8px;
+  background: #fffdf9;
+}
+
+.hero h1 {
+  margin: 0;
+  color: #413a33;
+  font-family: Georgia, "Malgun Gothic", serif;
+  font-size: 38px;
+  letter-spacing: 0;
+}
+
+.hero p {
+  max-width: 690px;
+  margin: 12px 0 0;
+  color: #7a6f64;
+  line-height: 1.7;
+}
+
+.eyebrow {
+  margin: 0 0 8px !important;
+  color: #b78256 !important;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.heroCard {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  min-width: 205px;
+  padding: 18px 22px;
+  border-radius: 50px;
+  background: #f3e5c9;
+  text-align: center;
+}
+
+.heroCard span {
+  display: block;
+  color: #876f4f;
+  font-size: 13px;
+}
+
+.heroCard strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 22px;
+}
+
+/* 수입, 지출, 잔액 */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.summaryCard {
+  min-height: 92px;
+  padding: 17px;
+  border: 0;
+  border-bottom: 2px solid #d6c6b2;
+  background: #fffdf9;
+}
+
+.summaryCard span {
+  color: #8b7d70;
+  font-size: 13px;
+}
+
+.summaryCard strong {
+  display: block;
+  margin-top: 10px;
+  color: #413a33;
+  font-size: 24px;
+}
+
+.summaryCard.income {
+  border-bottom-color: #91ad8d;
+}
+
+.summaryCard.expense {
+  border-bottom-color: #d98272;
+}
+
+.summaryCard.balance {
+  border-bottom-color: #7390b4;
+}
+
+/* 가계부 작성 / 월간 리포트 전환 버튼 */
+.viewButtons {
+  display: flex;
+  width: fit-content;
+  gap: 6px;
+  margin: 16px 0;
+  padding: 5px;
+  border: 1px solid #e1d8cc;
+  border-radius: 999px;
+  background: #f8f2e9;
+}
+
+.viewButtons button {
+  min-height: 40px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #7a6f64;
+  font-weight: 800;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.viewButtons button.active {
+  color: #fffdf9;
+  background: #b78256;
+  box-shadow: 0 5px 12px rgba(143, 96, 58, 0.18);
+}
+
+.viewButtons button:hover {
+  color: #413a33;
+  background: #fffdf9;
+}
+
+.viewButtons button.active:hover {
+  color: #fffdf9;
+  background: #b78256;
+}
+
+/* 입력 폼 + 차트 */
+.content {
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr);
+  gap: 14px;
+}
+
+.formCard,
+.chartCard,
+.listCard {
+  border: 1px solid #e1d8cc;
+  border-radius: 0;
+  background: #fffdf9;
+  box-shadow: none;
+}
+
+.formCard,
+.chartCard {
+  padding: 18px;
+}
+
+.sectionTitle p {
+  margin: 0 0 7px;
+  color: #b78256;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.sectionTitle h2 {
+  margin: 0;
+  color: #413a33;
+  font-size: 19px;
+}
+
+/* 수입 / 지출 선택 */
+.typeButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 16px 0;
+  padding: 4px;
+  border: 1px solid #e1d8cc;
+  border-radius: 7px;
+  background: #f8f2e9;
+}
+
+.typeButtons button,
+.filterButtons button,
+.actions button,
+.secondaryButton {
+  min-height: 38px;
+  border: 1px solid #e1d8cc;
+  border-radius: 6px;
+  background: #fffdf9;
+  color: #6f6257;
+  font-weight: 700;
+}
+
+.typeButtons button.active,
+.filterButtons button.active {
+  border-color: #b78256;
+  background: #b78256;
+  color: #fff;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  margin-top: 13px;
+  color: #8b7d70;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid #e0d5c7;
+  border-radius: 7px;
+  background: #fff;
+  color: #413a33;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: #b78256;
+  box-shadow: 0 0 0 3px rgba(183, 130, 86, 0.13);
+}
+
+.formActions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.primaryButton {
+  min-height: 42px;
+  border: 0;
+  border-radius: 7px;
+  background: #b78256;
+  color: #fff;
+  font-weight: 800;
+}
+
+.secondaryButton {
+  padding: 0 14px;
+}
+
+/* 파이 차트 */
+.chartCard {
+  min-height: 490px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chartBody {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  min-height: 330px;
+}
+
+.chartLegend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 14px;
+  margin-top: auto;
+  padding-top: 12px;
+  color: #76695e;
+  font-size: 13px;
+}
+
+.chartLegendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.chartLegendColor {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.empty {
+  display: grid;
+  min-height: 260px;
+  place-items: center;
+  color: #8b7d70;
+}
+
+/* 거래 목록 */
+.listCard {
+  margin-top: 14px;
+  padding: 18px;
+}
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.filterButtons {
+  display: flex;
+  gap: 7px;
+}
+
+.filterButtons button {
+  padding: 0 15px;
+}
+
+.transactions {
+  display: grid;
+  gap: 0;
+}
+
+.transaction {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 13px;
+  align-items: center;
+  padding: 14px 8px;
+  border-bottom: 1px dashed #ddd0c0;
+}
+
+.transaction:last-child {
+  border-bottom: 0;
+}
+
+.transaction p {
+  margin: 5px 0 0;
+  color: #85776c;
+  font-size: 13px;
+}
+
+.badge {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.badge.income {
+  color: #587456;
+  background: #e7efe3;
+}
+
+.badge.expense {
+  color: #b05d55;
+  background: #f7e3de;
+}
+
+strong.income {
+  color: #587456;
+}
+
+strong.expense {
+  color: #b05d55;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.actions button {
+  min-height: 34px;
+  padding: 0 11px;
+  font-size: 12px;
+}
+
+/* 오늘의 소비 점수 + 월간 소비 영수증 */
+.reportPage {
+  margin-top: 14px;
+}
+
+.reportHeader {
+  margin-bottom: 14px;
+}
+
+.reportGrid {
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr);
+  gap: 14px;
+}
+
+.scoreCard,
+.receiptCard {
+  border: 1px solid #e1d8cc;
+  background: #fffdf9;
+  box-shadow: none;
+}
+
+.scoreCard {
+  padding: 20px;
+  border-radius: 18px 18px 8px 8px;
+  background:
+    linear-gradient(180deg, #fffdf9, #fbf2e7);
+}
+
+.scoreCard .sectionTitle h2 {
+  font-size: 48px;
+  line-height: 1;
+  color: #b78256;
+}
+
+.scoreSpend {
+  margin: 18px 0 12px;
+  color: #7a6f64;
+  font-weight: 800;
+}
+
+.scoreBox {
+  padding: 16px;
+  border: 1px dashed #d7c7b3;
+  border-radius: 10px;
+  background: #fffaf1;
+  color: #5f5146;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.score45 {
+  border-color: #d98272;
+  background: #fae8e2;
+  color: #9e4a42;
+}
+
+.score60 {
+  border-color: #d8b66f;
+  background: #fff4d7;
+  color: #8a6422;
+}
+
+.score80,
+.score100 {
+  border-color: #91ad8d;
+  background: #edf5e9;
+  color: #587456;
+}
+
+.receiptCard {
+  position: relative;
+  padding: 24px 26px;
+  border-radius: 4px;
+  font-family: "Courier New", "Malgun Gothic", monospace;
+}
+
+.receiptCard::before,
+.receiptCard::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background:
+    linear-gradient(135deg, #fdfbf7 25%, transparent 25%) 0 0 / 16px 16px,
+    linear-gradient(225deg, #fdfbf7 25%, transparent 25%) 0 0 / 16px 16px;
+}
+
+.receiptCard::before {
+  top: -1px;
+}
+
+.receiptCard::after {
+  bottom: -1px;
+  transform: rotate(180deg);
+}
+
+.receiptTitle {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed #bfae9b;
+  text-align: center;
+}
+
+.receiptTitle span,
+.receiptTitle em {
+  color: #8b7d70;
+  font-size: 12px;
+  font-style: normal;
+}
+
+.receiptTitle strong {
+  color: #413a33;
+  font-size: 20px;
+}
+
+.receiptSummary {
+  display: grid;
+  gap: 8px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed #bfae9b;
+}
+
+.receiptSummary div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: #6f6257;
+}
+
+.receiptSummary span {
+  color: #8b7d70;
+}
+
+.receiptSummary strong {
+  text-align: right;
+}
+
+.receiptRows {
+  display: grid;
+  gap: 10px;
+}
+
+.receiptRow,
+.receiptTotal {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.receiptRow span,
+.receiptRow strong {
+  color: #5f5146;
+}
+
+.receiptRow strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.receiptRow em {
+  color: #b78256;
+  font-size: 12px;
+  font-style: normal;
+}
+
+.receiptTotal {
+  padding-top: 16px;
+  margin-top: 18px;
+  border-top: 1px dashed #bfae9b;
+  color: #413a33;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.empty.small {
+  min-height: 170px;
+}
+
+@media (max-width: 850px) {
+  .app {
+    padding: 18px 16px 38px 36px;
+  }
+
+  .app::before {
+    left: 22px;
+  }
+
+  .heroCard {
+    position: static;
+    width: fit-content;
+    margin-top: 18px;
+  }
+
+  .summary,
+  .content,
+  .reportGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .listHeader,
+  .transaction {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .actions button {
+    flex: 1;
+  }
+}
