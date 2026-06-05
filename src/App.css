@@ -29,7 +29,6 @@ button {
   box-shadow: 0 0 28px rgba(80, 66, 50, 0.08);
 }
 
-/* 왼쪽 다이어리 줄 */
 .app::before {
   content: "";
   position: absolute;
@@ -40,14 +39,14 @@ button {
   background: #efcccc;
 }
 
-/* 상단 소개 */
 .hero {
   position: relative;
   min-height: 150px;
   padding: 24px 28px;
-  border: 1px dashed #cdbda9;
-  border-radius: 8px;
-  background: #fffdf9;
+  border: 1px solid #ead7bd;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff8eb 0%, #fffdf9 58%, #f6e4c4 100%);
+  box-shadow: 0 12px 28px rgba(146, 101, 57, 0.08);
 }
 
 .hero h1 {
@@ -59,7 +58,6 @@ button {
 }
 
 .monthNumber {
-  /* +추가+ 5, 7 같은 숫자도 제목과 자연스럽게 어울리도록 숫자만 폰트 변경 */
   font-family: "Segoe UI", Arial, sans-serif;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -86,7 +84,9 @@ button {
   min-width: 205px;
   padding: 18px 22px;
   border-radius: 50px;
-  background: #f3e5c9;
+  border: 1px solid #ead6b7;
+  background: #f2dfbc;
+  box-shadow: 0 8px 18px rgba(141, 98, 50, 0.08);
   text-align: center;
 }
 
@@ -102,7 +102,6 @@ button {
   font-size: 22px;
 }
 
-/* 수입, 지출, 잔액 */
 .summary {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -113,13 +112,14 @@ button {
 .summaryCard {
   min-height: 92px;
   padding: 17px;
-  border: 0;
-  border-bottom: 2px solid #d6c6b2;
-  background: #fffdf9;
+  border: 1px solid #ead7bd;
+  border-bottom: 3px solid #d6c6b2;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fffdf9 0%, #fff7ec 100%);
+  box-shadow: 0 8px 18px rgba(146, 101, 57, 0.05);
 }
 
 .summaryCard span {
-  /* +추가+ 월 수입/월 지출/월 잔액 제목만 더 잘 보이도록 수정 */
   color: #5f5145;
   font-size: 14px;
   font-weight: 700;
@@ -144,17 +144,16 @@ button {
   border-bottom-color: #7390b4;
 }
 
-/* ★ 특정 날짜 소비 점수 추가: 조회 날짜 선택 */
 .monthSelector {
   width: min(260px, 100%);
   margin: 16px 0 0;
   padding: 14px 16px;
-  border: 1px dashed #d7c7b3;
-  border-radius: 8px;
-  background: #fffdf9;
+  border: 1px solid #ead7bd;
+  border-radius: 12px;
+  background: #fff9ee;
+  box-shadow: 0 8px 18px rgba(146, 101, 57, 0.06);
 }
 
-/* 가계부 작성 / 월간 리포트 전환 버튼 */
 .viewButtons {
   display: flex;
   width: fit-content;
@@ -196,7 +195,6 @@ button {
   background: #b78256;
 }
 
-/* 입력 폼 + 차트 */
 .content {
   display: grid;
   grid-template-columns: 310px minmax(0, 1fr);
@@ -206,10 +204,10 @@ button {
 .formCard,
 .chartCard,
 .listCard {
-  border: 1px solid #e1d8cc;
-  border-radius: 0;
-  background: #fffdf9;
-  box-shadow: none;
+  border: 1px solid #ead7bd;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fffdf9 0%, #fff9f0 100%);
+  box-shadow: 0 10px 22px rgba(146, 101, 57, 0.06);
 }
 
 .formCard,
@@ -230,16 +228,15 @@ button {
   font-size: 19px;
 }
 
-/* 수입 / 지출 선택 */
 .typeButtons {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
   margin: 16px 0;
   padding: 4px;
-  border: 1px solid #e1d8cc;
-  border-radius: 7px;
-  background: #f8f2e9;
+  border: 1px solid #e7d3b8;
+  border-radius: 10px;
+  background: #fbf1df;
 }
 
 .typeButtons button,
@@ -308,7 +305,6 @@ select:focus {
   padding: 0 14px;
 }
 
-/* 파이 차트 */
 .chartCard {
   min-height: 490px;
   display: flex;
@@ -354,7 +350,6 @@ select:focus {
   color: #8b7d70;
 }
 
-/* 거래 목록 */
 .listCard {
   margin-top: 14px;
   padding: 18px;
@@ -377,7 +372,6 @@ select:focus {
   padding: 0 15px;
 }
 
-/* 거래 내역 검색창 */
 .searchInput {
   margin-bottom: 14px;
   background: #fffaf1;
@@ -445,7 +439,6 @@ strong.expense {
   font-size: 12px;
 }
 
-/* ★ 특정 날짜 소비 점수 추가: 특정 날짜 소비 점수 + 월간 소비 영수증 */
 .reportPage {
   margin-top: 14px;
 }
@@ -470,8 +463,7 @@ strong.expense {
 .scoreCard {
   padding: 20px;
   border-radius: 18px 18px 8px 8px;
-  background:
-    linear-gradient(180deg, #fffdf9, #fbf2e7);
+  background: linear-gradient(180deg, #fffdf9, #fbf2e7);
 }
 
 .scoreCard .sectionTitle h2 {
@@ -503,7 +495,6 @@ strong.expense {
 }
 
 .score20 {
-  /* +추가+ 20점일 때는 소비 위험이 크게 느껴지도록 강한 경고 색상 적용 */
   border-color: #b91c1c;
   background: #fecaca;
   color: #7f1d1d;
@@ -526,7 +517,15 @@ strong.expense {
 .receiptCard {
   position: relative;
   padding: 24px 26px;
-  border-radius: 4px;
+  border-color: #d8c3a7;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, rgba(138, 108, 74, 0.04) 1px, transparent 1px) 0 0 /
+      18px 18px,
+    linear-gradient(180deg, #fffdf7 0%, #fff7e9 100%);
+  box-shadow:
+    0 18px 30px rgba(94, 63, 35, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
   font-family: "Courier New", "Malgun Gothic", monospace;
 }
 
@@ -554,10 +553,24 @@ strong.expense {
 .receiptTitle {
   display: grid;
   gap: 4px;
-  padding-bottom: 16px;
+  padding: 4px 0 16px;
   margin-bottom: 16px;
   border-bottom: 1px dashed #bfae9b;
   text-align: center;
+}
+
+.receiptTitle::before {
+  content: "CHECKED";
+  width: fit-content;
+  margin: 0 auto 6px;
+  padding: 4px 10px;
+  border: 1px solid #c58b5f;
+  border-radius: 999px;
+  color: #b78256;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  transform: rotate(-2deg);
 }
 
 .receiptTitle span,
@@ -597,7 +610,7 @@ strong.expense {
 
 .receiptRows {
   display: grid;
-  gap: 10px;
+  gap: 6px;
 }
 
 .receiptRow,
@@ -605,6 +618,15 @@ strong.expense {
   display: flex;
   justify-content: space-between;
   gap: 18px;
+}
+
+.receiptRow {
+  padding: 7px 0;
+  border-bottom: 1px dotted #e0cdb7;
+}
+
+.receiptRow:last-child {
+  border-bottom: 0;
 }
 
 .receiptRow span,
@@ -619,15 +641,21 @@ strong.expense {
 }
 
 .receiptRow em {
-  color: #b78256;
+  min-width: 42px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #f3e5c9;
+  color: #8f5f35;
   font-size: 12px;
+  font-weight: 900;
   font-style: normal;
+  text-align: center;
 }
 
 .receiptTotal {
   padding-top: 16px;
   margin-top: 18px;
-  border-top: 1px dashed #bfae9b;
+  border-top: 2px dashed #bfae9b;
   color: #413a33;
   font-size: 18px;
   font-weight: 900;
