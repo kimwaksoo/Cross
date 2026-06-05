@@ -1,8 +1,8 @@
-// 입력된 거래 내역을 목록으로 보여주고, 필터/검색/수정/삭제 버튼을 담당하는 컴포넌트입니다.
+// 입력된 거래 내역을 목록으로 보여주고, 필터/검색/수정/삭제 버튼 담당 컴포넌트
 import type { Transaction, TransactionType } from "../types";
 import { formatMoney } from "../data";
 
-// 거래 목록 컴포넌트에서 필요한 props 타입입니다.
+// 거래 목록 컴포넌트에 필요한 props
 type Props = {
   transactions: Transaction[];
   filter: "all" | TransactionType;
@@ -27,7 +27,7 @@ export default function TransactionList({
       <div className="listHeader">
         <div className="sectionTitle">
           <p>내역 관리</p>
-          <h2>수입/지출 리스트</h2>
+          <h2>수입 / 지출 리스트</h2>
         </div>
 
         <div className="filterButtons">
@@ -43,7 +43,7 @@ export default function TransactionList({
         </div>
       </div>
 
-      {/* +추가+ 검색 기능: 카테고리나 메모에 포함된 글자로 내역을 찾습니다. */}
+      {/* 검색 기능 */}
       <input
         className="searchInput"
         value={searchText}
@@ -52,9 +52,9 @@ export default function TransactionList({
       />
 
       <div className="transactions">
-        {/* 거래 내역이 없으면 안내 문구를 보여주고, 있으면 map으로 반복해서 보여줍니다. */}
+        {/* 거래 내역이 없으면 안내 문구 표기, 있으면 map으로 반복 표기 */}
         {transactions.length === 0 ? (
-          <div className="empty">아직 등록된 내역이 없습니다.</div>
+          <div className="empty">조건에 맞는 내역이 없습니다.</div>
         ) : (
           transactions.map((item) => (
             <article className="transaction" key={item.id}>

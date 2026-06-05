@@ -1,9 +1,9 @@
-// 수입/지출 내역을 입력하거나 수정하는 폼 컴포넌트입니다.
+// 수입/지출 내역 입력, 수정 컴포넌트
 import type { FormEvent } from "react";
 import type { TransactionType } from "../types";
 import { expenseCategories, incomeCategories } from "../data";
 
-// 부모 컴포넌트인 App에서 전달받는 값과 함수의 타입입니다.
+// App에서 전달받는 값과 함수의 타입
 type Props = {
   type: TransactionType;
   category: string;

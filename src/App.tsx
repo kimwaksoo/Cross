@@ -1,102 +1,106 @@
-// 가계부 앱의 전체 화면과 거래 내역 상태를 관리하는 메인 파일입니다.
 import { useEffect, useState } from "react";
 import "./App.css";
 import LedgerView from "./components/LedgerView";
-import MonthSelector from "./components/MonthSelector";
+import MonthSelector from "./components/DateSelector";
 import MonthlyReport from "./components/MonthlyReport";
 import ViewButtons from "./components/ViewButtons";
 import { expenseCategories, formatMoney, incomeCategories } from "./data";
 import type { Transaction, TransactionType, ViewType } from "./types";
+import { getChartData, getMonthTransactions, getTotalByType, getVisibleTransactions } from "./utils";
 
-// localStorage에 거래 내역을 저장할 때 사용하는 이름입니다.
+// localStorage에 거래 내역을 저장
 const STORAGE_KEY = "moneychecks-transactions";
 
 export default function App() {
-  // 오늘 날짜를 input type="date"에서 사용할 수 있는 형식으로 만듭니다.
-  const today = new Date().toISOString().slice(0, 10);
 
-  // localStorage에 저장된 거래 내역이 있으면 불러오고, 없으면 빈 배열로 시작합니다.
+  // 컴퓨터의 로컬 날짜 yyyy-mm-dd
+  const getTodayDate = () => {
+    const now = new Date();
+    const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    return localTime.toISOString().slice(0, 10);
+  };
+
+  // 오늘 날짜를 사용할 수 있는 형식으로 만든 값
+  const today = getTodayDate();
+
+  // 전체 거래 내역 목록
   const [transactions, setTransactions] = useState<Transaction[]>(() => {
+    // localStorage에 저장된 문자열 데이터
     const savedData = localStorage.getItem(STORAGE_KEY);
     return savedData ? JSON.parse(savedData) : [];
   });
 
-  // 입력 폼에서 사용하는 값들을 state로 관리합니다.
+  
+  // 입력 폼 선택 수입/지출 종류
   const [type, setType] = useState<TransactionType>("income");
+
+  // 입력 폼 선택 카테고리
   const [category, setCategory] = useState(incomeCategories[0]);
+
+  // 입력 폼 금액 값
   const [amount, setAmount] = useState("");
+
+  // 입력 폼 날짜
   const [date, setDate] = useState(today);
+
+  // 입력 폼 메모 값
   const [memo, setMemo] = useState("");
 
-  // 수정 중인 거래 id입니다. null이면 새 거래를 추가하는 상태입니다.
+  // 수정 중인 거래 id. null이면 새 거래를 추가
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  // 거래 목록에서 전체/수입/지출 중 어떤 항목을 볼지 정합니다.
+  // 거래 목록에서 전체/수입/지출 중 어떤 항목을 볼지 정하는 값
   const [filter, setFilter] = useState<"all" | TransactionType>("all");
 
-  // 가계부 작성 화면과 월간 리포트 화면을 전환하기 위한 state입니다.
+  // 가계부 작성/월간 리포트 화면 전환 값
   const [view, setView] = useState<ViewType>("ledger");
 
-  // +추가+ 월 선택 기능: 사용자가 보고 싶은 월을 직접 선택할 수 있게 합니다.
-  const [selectedMonth, setSelectedMonth] = useState(today.slice(0, 7));
+  // 특정 날짜 소비 점수
+  const [selectedDate, setSelectedDate] = useState(today);
 
-  // +추가+ 검색 기능: 카테고리나 메모에 들어간 글자로 거래 내역을 찾습니다.
+  // 카테고리/메모로 거래 내역 검색할 때 사용
   const [searchText, setSearchText] = useState("");
 
-  // 거래 내역이 바뀔 때마다 localStorage에 자동 저장합니다.
+  // 거래 내역 바뀔 때마다 localStorage 자동 저장
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
   }, [transactions]);
 
-  // 선택한 월에 해당하는 거래만 따로 모읍니다.
-  const monthTransactions = transactions.filter((item) => item.date.startsWith(selectedMonth));
+  // 월 정보만 잘라 월간 내역 조회에 사용
+  const selectedMonth = selectedDate.slice(0, 7);
 
-  // 수입 내역만 골라서 총 수입을 계산합니다.
-  const totalIncome = monthTransactions
-    .filter((item) => item.type === "income")
-    .reduce((sum, item) => sum + item.amount, 0);
+  // 선택한 월에 해당하는 거래 내역만 모아둔 배열
+  const monthTransactions = getMonthTransactions(transactions, selectedMonth);
 
-  // 지출 내역만 골라서 총 지출을 계산합니다.
-  const totalExpense = monthTransactions
-    .filter((item) => item.type === "expense")
-    .reduce((sum, item) => sum + item.amount, 0);
+  // 선택한 월의 총 수입
+  const totalIncome = getTotalByType(monthTransactions, "income");
 
-  // 차트에 사용할 카테고리별 지출 합계를 정리합니다.
-  const expenseGroup: Record<string, number> = {};
+  // 선택한 월의 총 지출
+  const totalExpense = getTotalByType(monthTransactions, "expense");
 
-  monthTransactions
-    .filter((item) => item.type === "expense")
-    .forEach((item) => {
-      expenseGroup[item.category] = (expenseGroup[item.category] || 0) + item.amount;
-    });
+  // 카테고리별 지출 비율 차트에 사용할 데이터
+  const chartData = getChartData(monthTransactions);
 
-  // 차트 컴포넌트에서 사용할 수 있도록 배열 형태로 바꿉니다.
-  const chartData = Object.entries(expenseGroup).map(([name, value]) => ({
-    name,
-    value,
-  }));
+  // 필터와 검색어가 적용되어 실제 화면에 보이는 거래 목록
+  const visibleTransactions = getVisibleTransactions(monthTransactions, filter, searchText);
 
-  // +추가+ 선택한 필터와 검색어에 맞는 거래 목록만 화면에 보여줍니다.
-  const visibleTransactions = monthTransactions
-    .filter((item) => filter === "all" || item.type === filter)
-    .filter((item) => item.category.includes(searchText) || item.memo.includes(searchText))
-    .sort((a, b) => b.date.localeCompare(a.date));
+  // 선택한 월에서 월 숫자만 꺼내 상단 제목에 사용
+  const selectedMonthNumber = Number(selectedMonth.slice(5, 7));
 
-  // 거래 추가/수정 후 입력값을 비웁니다. 수입/지출 선택은 그대로 유지합니다.
+  // 거래 추가/수정 후 입력값 공백, 수입/지출과 날짜 선택은 그대로 유지
   const resetForm = () => {
     setAmount("");
-    setDate(today);
     setMemo("");
     setEditingId(null);
   };
 
-  // 수입/지출을 바꾸면 첫 번째 카테고리도 같이 바꿉니다.
+  // 수입/지출을 바꾸면 첫 번째 카테고리도 같이 변동
   const handleTypeChange = (nextType: TransactionType) => {
     setType(nextType);
     setCategory(nextType === "income" ? incomeCategories[0] : expenseCategories[0]);
   };
 
-  // 폼을 제출하면 새 거래를 추가하거나 기존 거래를 수정합니다.
+  // 폼을 제출하면 거래 추가 또는 기존 거래 수정
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -105,6 +109,7 @@ export default function App() {
       return;
     }
 
+    // 새로 추가하거나 수정할 거래 데이터
     const nextTransaction: Transaction = {
       id: editingId ?? Date.now(),
       type,
@@ -123,7 +128,7 @@ export default function App() {
     resetForm();
   };
 
-  // 수정 버튼을 누르면 선택한 거래 정보를 입력 폼에 넣습니다.
+  // 수정 버튼 누르면 선택한 거래 정보 입력
   const handleEdit = (item: Transaction) => {
     setEditingId(item.id);
     setType(item.type);
@@ -134,8 +139,9 @@ export default function App() {
     setView("ledger");
   };
 
-  // +추가+ 삭제 확인창 기능: 실수로 삭제하지 않도록 확인 후 삭제합니다.
+  // 삭제 확인창
   const handleDelete = (id: number) => {
+    // 삭제 확인창에서의 결과
     const isDelete = confirm("정말 삭제하시겠습니까?");
 
     if (!isDelete) {
@@ -149,9 +155,11 @@ export default function App() {
     <main className="app">
       <section className="hero">
         <div>
-          <p className="eyebrow">MoneyChecks Diary</p>
-          <h1>5월의 소비 기록</h1>
-          <p>오늘의 작은 기록이 더 좋은 소비 습관을 만듭니다.</p>
+          {/* <p className="eyebrow">MoneyChecks Diary</p> */}
+          <h1>
+            <span className="monthNumber">{selectedMonthNumber}</span>월의 소비 기록
+          </h1>
+          <p>작은 소비도 차곡차곡, 돈의 흐름을 가볍게 돌아봐요.</p>
         </div>
 
         <div className="heroCard">
@@ -160,9 +168,8 @@ export default function App() {
         </div>
       </section>
 
-      <MonthSelector selectedMonth={selectedMonth} onMonthChange={setSelectedMonth} />
+      <MonthSelector selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <ViewButtons view={view} onViewChange={setView} />
-
 
       {view === "ledger" ? (
         <LedgerView
@@ -193,7 +200,7 @@ export default function App() {
       ) : (
         <MonthlyReport
           transactions={monthTransactions}
-          today={today}
+          selectedDate={selectedDate}
           selectedMonth={selectedMonth}
           totalExpense={totalExpense}
         />

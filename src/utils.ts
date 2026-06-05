@@ -1,0 +1,52 @@
+import type { Transaction, TransactionType } from "./types";
+
+// 선택한 월에 해당하는 거래 내역만 골라내는 함수
+export const getMonthTransactions = (
+  transactions: Transaction[],
+  selectedMonth: string,
+) => {
+  return transactions.filter((item) => item.date.startsWith(selectedMonth));
+};
+
+// 수입 또는 지출 중 원하는 종류의 총합을 계산하는 함수
+export const getTotalByType = (
+  transactions: Transaction[],
+  type: TransactionType,
+) => {
+  return transactions
+    .filter((item) => item.type === type)
+    .reduce((sum, item) => sum + item.amount, 0);
+};
+
+// 지출 내역 카테고리별로 묶어 차트 데이터로 변환
+export const getChartData = (transactions: Transaction[]) => {
+  // 카테고리 이름 key, 금액 합계 value로 저장
+  const expenseGroup: Record<string, number> = {};
+
+  transactions
+    .filter((item) => item.type === "expense")
+    .forEach((item) => {
+      expenseGroup[item.category] =
+        (expenseGroup[item.category] || 0) + item.amount;
+    });
+
+  return Object.entries(expenseGroup).map(([name, value]) => ({
+    name,
+    value,
+  }));
+};
+
+// 필터 버튼, 검색어를 적용해서 실제 화면에 보여줄 거래 목록을 만드는 함수
+export const getVisibleTransactions = (
+  transactions: Transaction[],
+  filter: "all" | TransactionType,
+  searchText: string,
+) => {
+  return transactions
+    .filter((item) => filter === "all" || item.type === filter)
+    .filter(
+      (item) =>
+        item.category.includes(searchText) || item.memo.includes(searchText),
+    )
+    .sort((a, b) => b.date.localeCompare(a.date));
+};

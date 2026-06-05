@@ -1,4 +1,4 @@
-// 가계부 작성 화면에 필요한 요약 카드, 입력 폼, 차트, 거래 목록을 묶는 컴포넌트입니다.
+// 가계부 작성 화면에 필요한 요약 카드, 입력 폼, 차트, 거래 목록을 묶은 컴포넌트
 import ExpenseChart from "./ExpenseChart";
 import SummaryCards from "./SummaryCards";
 import TransactionForm from "./TransactionForm";

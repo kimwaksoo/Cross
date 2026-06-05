@@ -58,6 +58,13 @@ button {
   letter-spacing: 0;
 }
 
+.monthNumber {
+  /* +추가+ 5, 7 같은 숫자도 제목과 자연스럽게 어울리도록 숫자만 폰트 변경 */
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 .hero p {
   max-width: 690px;
   margin: 12px 0 0;
@@ -112,8 +119,10 @@ button {
 }
 
 .summaryCard span {
-  color: #8b7d70;
-  font-size: 13px;
+  /* +추가+ 월 수입/월 지출/월 잔액 제목만 더 잘 보이도록 수정 */
+  color: #5f5145;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .summaryCard strong {
@@ -133,6 +142,16 @@ button {
 
 .summaryCard.balance {
   border-bottom-color: #7390b4;
+}
+
+/* ★ 특정 날짜 소비 점수 추가: 조회 날짜 선택 */
+.monthSelector {
+  width: min(260px, 100%);
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border: 1px dashed #d7c7b3;
+  border-radius: 8px;
+  background: #fffdf9;
 }
 
 /* 가계부 작성 / 월간 리포트 전환 버튼 */
@@ -358,6 +377,12 @@ select:focus {
   padding: 0 15px;
 }
 
+/* 거래 내역 검색창 */
+.searchInput {
+  margin-bottom: 14px;
+  background: #fffaf1;
+}
+
 .transactions {
   display: grid;
   gap: 0;
@@ -420,7 +445,7 @@ strong.expense {
   font-size: 12px;
 }
 
-/* 오늘의 소비 점수 + 월간 소비 영수증 */
+/* ★ 특정 날짜 소비 점수 추가: 특정 날짜 소비 점수 + 월간 소비 영수증 */
 .reportPage {
   margin-top: 14px;
 }
@@ -475,6 +500,14 @@ strong.expense {
   border-color: #d98272;
   background: #fae8e2;
   color: #9e4a42;
+}
+
+.score20 {
+  /* +추가+ 20점일 때는 소비 위험이 크게 느껴지도록 강한 경고 색상 적용 */
+  border-color: #b91c1c;
+  background: #fecaca;
+  color: #7f1d1d;
+  box-shadow: inset 0 0 0 2px rgba(185, 28, 28, 0.12);
 }
 
 .score60 {

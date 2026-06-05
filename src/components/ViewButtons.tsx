@@ -1,4 +1,4 @@
-// 가계부 작성 화면과 월간 리포트 화면을 전환하는 버튼 컴포넌트입니다.
+// 가계부 작성 / 월간 리포트 전환 버튼 컴포넌트
 import type { ViewType } from "../types";
 
 type Props = {
