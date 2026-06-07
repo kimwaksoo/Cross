@@ -311,6 +311,33 @@ select:focus {
   flex-direction: column;
 }
 
+.chartModeButtons {
+  display: flex;
+  width: fit-content;
+  gap: 5px;
+  margin: 14px 0 6px;
+  padding: 4px;
+  border: 1px solid #e7d3b8;
+  border-radius: 999px;
+  background: #fbf1df;
+}
+
+.chartModeButtons button {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #7a6f64;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.chartModeButtons button.active {
+  color: #fffdf9;
+  background: #b78256;
+}
+
 .chartBody {
   flex: 1;
   display: grid;
