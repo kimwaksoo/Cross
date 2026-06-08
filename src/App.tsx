@@ -30,7 +30,7 @@ export default function App() {
     return savedData ? JSON.parse(savedData) : [];
   });
 
-  
+
   // 입력 폼 선택 수입/지출 종류
   const [type, setType] = useState<TransactionType>("income");
 
