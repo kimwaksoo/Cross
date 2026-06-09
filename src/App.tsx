@@ -1,6 +1,3 @@
-// 진영훈 개멍청따리북갈련아
-
-
 import { useEffect, useState } from "react";
 import "./App.css";
 import LedgerView from "./components/LedgerView";
@@ -173,7 +170,6 @@ export default function App() {
 
       <MonthSelector selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <ViewButtons view={view} onViewChange={setView} />
-
       {view === "ledger" ? (
         <LedgerView
           totalIncome={totalIncome}

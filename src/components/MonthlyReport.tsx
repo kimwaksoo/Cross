@@ -58,6 +58,7 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
   const topItem = receiptItems[0];
 
   return (
+    
     <section className="reportPage">
       <div className="reportHeader">
         <div className="sectionTitle">
@@ -125,3 +126,7 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
     </section>
   );
 }
+
+
+
+
