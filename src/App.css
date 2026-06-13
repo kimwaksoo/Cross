@@ -241,6 +241,7 @@ button {
 
 .typeButtons button,
 .filterButtons button,
+.sortButtons button,
 .actions button,
 .secondaryButton {
   min-height: 38px;
@@ -252,7 +253,8 @@ button {
 }
 
 .typeButtons button.active,
-.filterButtons button.active {
+.filterButtons button.active,
+.sortButtons button.active {
   border-color: #b78256;
   background: #b78256;
   color: #fff;
@@ -395,8 +397,16 @@ select:focus {
   gap: 7px;
 }
 
-.filterButtons button {
+.filterButtons button,
+.sortButtons button {
   padding: 0 15px;
+}
+
+.sortButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 12px;
 }
 
 .searchInput {

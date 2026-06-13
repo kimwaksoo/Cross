@@ -1,5 +1,5 @@
 // 입력된 거래 내역을 목록으로 보여주고, 필터/검색/수정/삭제 버튼 담당 컴포넌트
-import type { Transaction, TransactionType } from "../types";
+import type { SortType, Transaction, TransactionType } from "../types";
 import { formatMoney } from "../data";
 
 // 거래 목록 컴포넌트에 필요한 props
@@ -7,8 +7,10 @@ type Props = {
   transactions: Transaction[];
   filter: "all" | TransactionType;
   searchText: string;
+  sortType: SortType;
   onFilterChange: (filter: "all" | TransactionType) => void;
   onSearchTextChange: (searchText: string) => void;
+  onSortTypeChange: (sortType: SortType) => void;
   onEdit: (item: Transaction) => void;
   onDelete: (id: number) => void;
 };
@@ -17,8 +19,10 @@ export default function TransactionList({
   transactions,
   filter,
   searchText,
+  sortType,
   onFilterChange,
   onSearchTextChange,
+  onSortTypeChange,
   onEdit,
   onDelete,
 }: Props) {
@@ -41,6 +45,18 @@ export default function TransactionList({
             지출
           </button>
         </div>
+      </div>
+
+      <div className="sortButtons">
+        <button className={sortType === "latest" ? "active" : ""} onClick={() => onSortTypeChange("latest")}>
+          최신순
+        </button>
+        <button className={sortType === "highAmount" ? "active" : ""} onClick={() => onSortTypeChange("highAmount")}>
+          금액 높은순
+        </button>
+        <button className={sortType === "lowAmount" ? "active" : ""} onClick={() => onSortTypeChange("lowAmount")}>
+          금액 낮은순
+        </button>
       </div>
 
       {/* 검색 기능 */}

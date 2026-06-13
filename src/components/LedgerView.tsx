@@ -3,7 +3,7 @@ import ExpenseChart from "./ExpenseChart";
 import SummaryCards from "./SummaryCards";
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
-import type { Transaction, TransactionType } from "../types";
+import type { SortType, Transaction, TransactionType } from "../types";
 
 type ChartItem = {
   name: string;
@@ -17,6 +17,7 @@ type Props = {
   transactions: Transaction[];
   filter: "all" | TransactionType;
   searchText: string;
+  sortType: SortType;
   type: TransactionType;
   category: string;
   amount: string;
@@ -32,6 +33,7 @@ type Props = {
   onCancel: () => void;
   onFilterChange: (filter: "all" | TransactionType) => void;
   onSearchTextChange: (searchText: string) => void;
+  onSortTypeChange: (sortType: SortType) => void;
   onEdit: (item: Transaction) => void;
   onDelete: (id: number) => void;
 };
@@ -43,6 +45,7 @@ export default function LedgerView({
   transactions,
   filter,
   searchText,
+  sortType,
   type,
   category,
   amount,
@@ -58,6 +61,7 @@ export default function LedgerView({
   onCancel,
   onFilterChange,
   onSearchTextChange,
+  onSortTypeChange,
   onEdit,
   onDelete,
 }: Props) {
@@ -88,8 +92,10 @@ export default function LedgerView({
         transactions={transactions}
         filter={filter}
         searchText={searchText}
+        sortType={sortType}
         onFilterChange={onFilterChange}
         onSearchTextChange={onSearchTextChange}
+        onSortTypeChange={onSortTypeChange}
         onEdit={onEdit}
         onDelete={onDelete}
       />

@@ -1,4 +1,4 @@
-import type { Transaction, TransactionType } from "./types";
+import type { SortType, Transaction, TransactionType } from "./types";
 
 // 선택한 월에 해당하는 거래 내역만 골라내는 함수
 export const getMonthTransactions = (
@@ -41,6 +41,7 @@ export const getVisibleTransactions = (
   transactions: Transaction[],
   filter: "all" | TransactionType,
   searchText: string,
+  sortType: SortType,
 ) => {
   return transactions
     .filter((item) => filter === "all" || item.type === filter)
@@ -48,5 +49,15 @@ export const getVisibleTransactions = (
       (item) =>
         item.category.includes(searchText) || item.memo.includes(searchText),
     )
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .sort((a, b) => {
+      if (sortType === "highAmount") {
+        return b.amount - a.amount;
+      }
+
+      if (sortType === "lowAmount") {
+        return a.amount - b.amount;
+      }
+
+      return b.date.localeCompare(a.date);
+    });
 };

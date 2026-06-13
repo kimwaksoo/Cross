@@ -25,8 +25,8 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
         : selectedDateExpenseTotal <= 70000
           ? 60
           : selectedDateExpenseTotal <= 100000
-          ? 45
-          : 20;
+            ? 45
+            : 20;
 
   // 점수에 따라 사용자에게 보여줄 안내 문구
   let scoreMessage = "선택한 날짜에는 지출이 없어 아주 좋은 소비 흐름입니다.";
@@ -58,7 +58,7 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
   const topItem = receiptItems[0];
 
   return (
-    
+
     <section className="reportPage">
       <div className="reportHeader">
         <div className="sectionTitle">

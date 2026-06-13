@@ -5,7 +5,7 @@ import MonthSelector from "./components/DateSelector";
 import MonthlyReport from "./components/MonthlyReport";
 import ViewButtons from "./components/ViewButtons";
 import { expenseCategories, formatMoney, incomeCategories } from "./data";
-import type { Transaction, TransactionType, ViewType } from "./types";
+import type { SortType, Transaction, TransactionType, ViewType } from "./types";
 import { getChartData, getMonthTransactions, getTotalByType, getVisibleTransactions } from "./utils";
 
 // localStorage에 거래 내역을 저장
@@ -61,6 +61,9 @@ export default function App() {
   // 카테고리/메모로 거래 내역 검색할 때 사용
   const [searchText, setSearchText] = useState("");
 
+  // 거래 내역 정렬 방식
+  const [sortType, setSortType] = useState<SortType>("latest");
+
   // 거래 내역 바뀔 때마다 localStorage 자동 저장
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
@@ -82,7 +85,7 @@ export default function App() {
   const chartData = getChartData(monthTransactions);
 
   // 필터와 검색어가 적용되어 실제 화면에 보이는 거래 목록
-  const visibleTransactions = getVisibleTransactions(monthTransactions, filter, searchText);
+  const visibleTransactions = getVisibleTransactions(monthTransactions, filter, searchText, sortType);
 
   // 선택한 월에서 월 숫자만 꺼내 상단 제목에 사용
   const selectedMonthNumber = Number(selectedMonth.slice(5, 7));
@@ -178,6 +181,7 @@ export default function App() {
           transactions={visibleTransactions}
           filter={filter}
           searchText={searchText}
+          sortType={sortType}
           type={type}
           category={category}
           amount={amount}
@@ -193,6 +197,7 @@ export default function App() {
           onCancel={resetForm}
           onFilterChange={setFilter}
           onSearchTextChange={setSearchText}
+          onSortTypeChange={setSortType}
           onEdit={handleEdit}
           onDelete={handleDelete}
         />
