@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./styles/App.css";
 import LedgerView from "./components/LedgerView";
 import MonthSelector from "./components/DateSelector";
 import MonthlyReport from "./components/MonthlyReport";
