@@ -18,6 +18,7 @@ export const getTotalByType = (
     .reduce((sum, item) => sum + item.amount, 0);
 };
 
+// ★ AI 활용 부분 ★ 지출 내역을 카테고리별 합계로 묶어 차트 데이터로 바꾸는 구조를 참고함
 // 지출 내역 카테고리별로 묶어 차트 데이터로 변환
 export const getChartData = (transactions: Transaction[]) => {
   // 카테고리 이름 key, 금액 합계 value로 저장
@@ -36,6 +37,7 @@ export const getChartData = (transactions: Transaction[]) => {
   }));
 };
 
+// ★ AI 활용 부분 ★ 필터, 검색어, 정렬 조건을 한 번에 적용하는 목록 처리 흐름을 참고함
 // 필터 버튼, 검색어를 적용해서 실제 화면에 보여줄 거래 목록을 만드는 함수
 export const getVisibleTransactions = (
   transactions: Transaction[],

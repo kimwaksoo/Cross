@@ -447,6 +447,11 @@ select:focus {
   font-weight: 900;
 }
 
+.badgeIcon {
+  font-size: 21px;
+  line-height: 1;
+}
+
 .badge.income {
   color: #587456;
   background: #e7efe3;

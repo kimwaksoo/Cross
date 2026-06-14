@@ -30,7 +30,10 @@ const COLORS = [
 ];
 
 export default function ExpenseChart({ data }: Props) {
+  // ★ AI 활용 부분 ★ 원형 차트와 막대 그래프를 전환하는 상태 관리 방식을 참고함
   const [chartType, setChartType] = useState<"pie" | "bar">("pie");
+
+  // ★ AI 활용 부분 ★ 막대 그래프에서 금액 기준 오름차순으로 보여주는 정렬 방식을 참고함
   const barData = [...data].sort((a, b) => a.value - b.value);
 
   return (

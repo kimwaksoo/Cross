@@ -13,6 +13,7 @@ const STORAGE_KEY = "moneychecks-transactions";
 
 export default function App() {
 
+  // ★ AI 활용 부분 ★ 한국 시간 기준 날짜가 하루 밀리지 않도록 로컬 날짜 계산 방식을 참고함
   // 컴퓨터의 로컬 날짜 yyyy-mm-dd
   const getTodayDate = () => {
     const now = new Date();
@@ -61,6 +62,7 @@ export default function App() {
   // 카테고리/메모로 거래 내역 검색할 때 사용
   const [searchText, setSearchText] = useState("");
 
+  // ★ AI 활용 부분 ★ 거래 목록을 최신순/금액순으로 바꾸기 위한 정렬 상태 구조를 참고함
   // 거래 내역 정렬 방식
   const [sortType, setSortType] = useState<SortType>("latest");
 

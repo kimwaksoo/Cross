@@ -15,6 +15,31 @@ type Props = {
   onDelete: (id: number) => void;
 };
 
+// ★ AI 활용 부분 ★ 카테고리 이름에 맞는 아이콘을 매칭하는 객체 구조를 참고함
+const getCategoryIcon = (category: string, type: TransactionType) => {
+  const icons: Record<string, string> = {
+    월급: "💼",
+    부수입: "✨",
+    용돈: "🎁",
+    투자수익: "📈",
+    기타수입: "💰",
+    경조사: "💌",
+    교육: "📚",
+    교통: "🚗",
+    "문화/여가": "🎬",
+    "술/유흥": "🍻",
+    식사: "🍽️",
+    "여행/숙박": "🧳",
+    의료: "💊",
+    "주거/통신": "🏠",
+    "카페/간식": "☕",
+    저축: "💰",
+    기타: "🧾",
+  };
+
+  return icons[category] ?? (type === "income" ? "💵" : "🛒");
+};
+
 export default function TransactionList({
   transactions,
   filter,
@@ -74,7 +99,9 @@ export default function TransactionList({
         ) : (
           transactions.map((item) => (
             <article className="transaction" key={item.id}>
-              <div className={`badge ${item.type}`}>{item.type === "income" ? "수" : "지"}</div>
+              <div className={`badge ${item.type}`} title={item.category}>
+                <span className="badgeIcon">{getCategoryIcon(item.category, item.type)}</span>
+              </div>
 
               <div>
                 <strong>{item.category}</strong>

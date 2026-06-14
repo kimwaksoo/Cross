@@ -16,6 +16,7 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
   // 선택한 날짜의 지출 금액을 모두 더한 값
   const selectedDateExpenseTotal = selectedDateExpenses.reduce((sum, item) => sum + item.amount, 0);
 
+  // ★ AI 활용 부분 ★ 선택 날짜의 지출 금액을 점수 구간으로 나누는 계산 방식을 참고함
   // 선택한 날짜의 지출 금액에 따라 보여줄 소비 점수
   const selectedDateScore =
     selectedDateExpenseTotal === 0
@@ -41,6 +42,7 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
     scoreMessage = "선택한 날짜의 지출이 과합니다. 그만 소비하셔야 됩니다."
   }
 
+  // ★ AI 활용 부분 ★ 월간 영수증에 표시할 카테고리별 지출 합계 계산 구조를 참고함
   // 카테고리별 지출 합계를 저장하는 객체
   const categoryTotals: Record<string, number> = {};
 
@@ -126,7 +128,6 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
     </section>
   );
 }
-
 
 
 
