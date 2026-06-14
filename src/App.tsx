@@ -13,7 +13,7 @@ const STORAGE_KEY = "moneychecks-transactions";
 
 export default function App() {
 
-  // ★ AI 활용 부분 ★ 한국 시간 기준 날짜가 하루 밀리지 않도록 로컬 날짜 계산 방식을 참고함
+  // ★ AI 활용 부분 ★ 한국 시간 기준 날짜가 하루 밀리지 않도록 로컬 날짜 계산 방식 참고
   // 컴퓨터의 로컬 날짜 yyyy-mm-dd
   const getTodayDate = () => {
     const now = new Date();
@@ -28,6 +28,7 @@ export default function App() {
   const [transactions, setTransactions] = useState<Transaction[]>(() => {
     // localStorage에 저장된 문자열 데이터
     const savedData = localStorage.getItem(STORAGE_KEY);
+    // 저장된 값이 있으면 문자열을 배열로, 없으면 빈 배열로 시작
     return savedData ? JSON.parse(savedData) : [];
   });
 
@@ -68,10 +69,12 @@ export default function App() {
 
   // 거래 내역 바뀔 때마다 localStorage 자동 저장
   useEffect(() => {
+    // transactions가 변경될 때마다 브라우저 저장소에 다시 저장
     localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
   }, [transactions]);
 
   // 월 정보만 잘라 월간 내역 조회에 사용
+  // 예: 2026-06-05 -> 2026-06
   const selectedMonth = selectedDate.slice(0, 7);
 
   // 선택한 월에 해당하는 거래 내역만 모아둔 배열
@@ -116,6 +119,7 @@ export default function App() {
 
     // 새로 추가하거나 수정할 거래 데이터
     const nextTransaction: Transaction = {
+      // 수정 중이면 기존 id를 쓰고, 새 내역이면 현재 시간값으로 id 생성
       id: editingId ?? Date.now(),
       type,
       category,
@@ -125,6 +129,7 @@ export default function App() {
     };
 
     setTransactions((prev) =>
+      // editingId가 있으면 수정, 없으면 새 거래를 맨 앞에 추가
       editingId
         ? prev.map((item) => (item.id === editingId ? nextTransaction : item))
         : [nextTransaction, ...prev]

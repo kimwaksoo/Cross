@@ -30,10 +30,10 @@ const COLORS = [
 ];
 
 export default function ExpenseChart({ data }: Props) {
-  // ★ AI 활용 부분 ★ 원형 차트와 막대 그래프를 전환하는 상태 관리 방식을 참고함
+  // ★ AI 활용 부분 ★ 원형 차트와 막대 그래프를 전환하는 상태 관리 방식 참고
   const [chartType, setChartType] = useState<"pie" | "bar">("pie");
 
-  // ★ AI 활용 부분 ★ 막대 그래프에서 금액 기준 오름차순으로 보여주는 정렬 방식을 참고함
+  // ★ AI 활용 부분 ★ 막대 그래프에서 금액 기준 오름차순으로 보여주는 정렬 방식 참고
   const barData = [...data].sort((a, b) => a.value - b.value);
 
   return (
@@ -56,6 +56,7 @@ export default function ExpenseChart({ data }: Props) {
 
       {data.length > 0 ? (
         <div className="chartBody">
+          {/* 영역 크기에 맞춰 차트 크기 자동 조절 */}
           <ResponsiveContainer width="100%" height={300}>
             {chartType === "pie" ? (
               <PieChart>
@@ -70,6 +71,7 @@ export default function ExpenseChart({ data }: Props) {
               <BarChart data={barData} margin={{ top: 12, right: 12, bottom: 20, left: 10 }}>
                 <CartesianGrid stroke="#ead7bd" strokeDasharray="3 3" />
                 <XAxis dataKey="name" tick={{ fill: "#76695e", fontSize: 12 }} />
+                {/* 세로축 금액을 만 원 단위로 줄여 표시 */}
                 <YAxis tick={{ fill: "#76695e", fontSize: 12 }} tickFormatter={(value) => `${Number(value) / 10000}만`} />
                 <Tooltip formatter={(value) => formatMoney(Number(value))} />
                 <Bar dataKey="value" radius={[8, 8, 0, 0]}>

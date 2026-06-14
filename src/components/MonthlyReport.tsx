@@ -16,7 +16,7 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
   // 선택한 날짜의 지출 금액을 모두 더한 값
   const selectedDateExpenseTotal = selectedDateExpenses.reduce((sum, item) => sum + item.amount, 0);
 
-  // ★ AI 활용 부분 ★ 선택 날짜의 지출 금액을 점수 구간으로 나누는 계산 방식을 참고함
+  // ★ AI 활용 부분 ★ 선택 날짜의 지출 금액을 점수 구간으로 나누는 계산 방식 참고
   // 선택한 날짜의 지출 금액에 따라 보여줄 소비 점수
   const selectedDateScore =
     selectedDateExpenseTotal === 0
@@ -50,10 +50,12 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
   const expenseTransactions = transactions.filter((item) => item.type === "expense");
 
   expenseTransactions.forEach((item) => {
+    // 같은 카테고리가 이미 있으면 기존 금액에 현재 금액 더함
     categoryTotals[item.category] = (categoryTotals[item.category] || 0) + item.amount;
   });
 
   // 영수증에 보여줄 카테고리별 지출 목록
+  // 금액이 큰 카테고리가 위로 오도록 정렬
   const receiptItems = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1]);
 
   // 가장 많이 지출한 카테고리
@@ -111,6 +113,7 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
                     <span>{category}</span>
                     <strong>
                       {formatMoney(amount)}
+                      {/* 현재 카테고리 금액이 전체 지출에서 차지하는 비율 */}
                       <em>{Math.round((amount / totalExpense) * 100)}%</em>
                     </strong>
                   </div>
@@ -128,6 +131,4 @@ export default function MonthlyReport({ transactions, selectedDate, selectedMont
     </section>
   );
 }
-
-
 

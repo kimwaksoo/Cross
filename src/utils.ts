@@ -15,6 +15,7 @@ export const getTotalByType = (
 ) => {
   return transactions
     .filter((item) => item.type === type)
+    // sum에는 지금까지 더한 금액, item.amount에는 현재 거래 금액
     .reduce((sum, item) => sum + item.amount, 0);
 };
 
@@ -31,6 +32,7 @@ export const getChartData = (transactions: Transaction[]) => {
         (expenseGroup[item.category] || 0) + item.amount;
     });
 
+  // 객체 형태의 합계 데이터를 차트에서 쓰기 쉬운 배열 형태로 변환
   return Object.entries(expenseGroup).map(([name, value]) => ({
     name,
     value,
@@ -49,9 +51,11 @@ export const getVisibleTransactions = (
     .filter((item) => filter === "all" || item.type === filter)
     .filter(
       (item) =>
+        // 검색어가 카테고리 또는 메모에 포함되면 화면 표시
         item.category.includes(searchText) || item.memo.includes(searchText),
     )
     .sort((a, b) => {
+      // 선택한 정렬 버튼에 따라 최신순 또는 금액순으로 정렬
       if (sortType === "highAmount") {
         return b.amount - a.amount;
       }

@@ -42,7 +42,7 @@ export default function TransactionForm({
     <form className="formCard" onSubmit={onSubmit}>
       <div className="sectionTitle">
         <p>거래 입력</p>
-        <h2>{editingId ? "내역 수정" : "새 내역 추가"}</h2>
+        <h2>{editingId ? "내역 수정" : "내역 추가"}</h2>
       </div>
 
       <div className="typeButtons">
@@ -69,7 +69,7 @@ export default function TransactionForm({
           type="number"
           min="1"
           step="1"
-          placeholder="예: 251231"
+          placeholder="예: 100000"
           value={amount}
           onChange={(e) => onAmountChange(e.target.value)}
           required

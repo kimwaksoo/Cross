@@ -15,7 +15,7 @@ type Props = {
   onDelete: (id: number) => void;
 };
 
-// ★ AI 활용 부분 ★ 카테고리 이름에 맞는 아이콘을 매칭하는 객체 구조를 참고함
+// 카테고리 이름에 맞는 아이콘을 매칭하는 객체 구조
 const getCategoryIcon = (category: string, type: TransactionType) => {
   const icons: Record<string, string> = {
     월급: "💼",
@@ -37,6 +37,7 @@ const getCategoryIcon = (category: string, type: TransactionType) => {
     기타: "🧾",
   };
 
+  // 등록되지 않은 카테고리는 수입/지출 종류에 따라 기본 아이콘 표시
   return icons[category] ?? (type === "income" ? "💵" : "🛒");
 };
 
